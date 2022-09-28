@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "app.github.closedpullerq"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -20,6 +20,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "GITHUB_AUTH_TOKEN", '"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"'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "GITHUB_AUTH_TOKEN", '"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"'
         }
     }
     compileOptions {
@@ -28,6 +34,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -45,7 +54,7 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
-    
+
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
 
     testImplementation 'junit:junit:4.13.2'
