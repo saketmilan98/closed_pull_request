@@ -1,21 +1,22 @@
 package app.github.closedpullerq.ui.pulls.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import app.github.closedpullerq.R
 import app.github.closedpullerq.databinding.FragmentPullsDetailBinding
-import app.github.closedpullerq.ui.pulls.adapter.PullsDataAdapter
 import app.github.closedpullerq.ui.pulls.model.PullsDataClassItem
 import app.github.closedpullerq.ui.pulls.viewmodel.MainViewModel
 import app.github.closedpullerq.utils.inputFormat
 import app.github.closedpullerq.utils.loadImage
 import app.github.closedpullerq.utils.outputFormat
 import java.util.*
+
 
 class PullsDetailFragment : Fragment() {
 
@@ -46,10 +47,16 @@ class PullsDetailFragment : Fragment() {
         binding.iv3.loadImage(currentItem.user.avatar_url)
         binding.tv9.text = "Created: ${outputFormat.format(inputFormat.parse(currentItem.created_at) as Date)}"
         binding.tv10.text = "Closed: ${outputFormat.format(inputFormat.parse(currentItem.closed_at) as Date)}"
-
-
-        //binding.pullListRv.adapter = pullDataAdapter
-        //setPullRvData()
+        binding.btn1.setOnClickListener {
+            val uri: Uri = Uri.parse(currentItem.head.repo.html_url)
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+        }
+        binding.btn2.setOnClickListener {
+            val uri: Uri = Uri.parse(currentItem.html_url)
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+        }
     }
 
 }
