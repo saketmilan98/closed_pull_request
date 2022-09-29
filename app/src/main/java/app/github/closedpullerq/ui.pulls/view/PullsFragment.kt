@@ -19,7 +19,8 @@ class PullsFragment : Fragment() {
 
     private val pullDataAdapter by lazy { PullsDataAdapter(requireContext(),
         onItemClicked = { pullItem, position ->
-
+            viewModel.setCurrentPullItem(pullItem)
+            requireActivity().supportFragmentManager.beginTransaction().add(R.id.mainFragmentContainer, PullsDetailFragment()).addToBackStack(null).commit()
         })
     }
 

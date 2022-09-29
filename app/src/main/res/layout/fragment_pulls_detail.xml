@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="pullsItem"
+            type="app.github.closedpullerq.ui.pulls.model.PullsDataClassItem"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        tools:context=".ui.pulls.view.PullsDetailFragment">
+
+        <include layout="@layout/toolbar_layout"
+            android:id="@+id/toolbarLayout"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+            android:background="#808080"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarLayout"
+            android:id="@+id/background_cl"
+            android:layout_margin="4dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/iv1"
+                app:srcCompat="@drawable/ic_git_merge"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="gone"
+                android:layout_marginTop="2dp"
+                android:layout_marginStart="10dp"
+
+                />
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv1"
+                app:layout_constraintEnd_toStartOf="@+id/tv3"
+                app:layout_constraintBottom_toTopOf="@+id/tv2"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="2dp"
+                android:textSize="14sp"
+                android:textColor="#808080"
+                android:text="@{``+ pullsItem.head.repo.full_name + ` #`+pullsItem.number}"
+                tools:text="Pull #1"
+                />
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/tv1"
+                app:layout_constraintStart_toStartOf="@+id/tv1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:text="@{pullsItem.title}"
+                tools:text="description"
+                />
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/tv1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv1"
+                android:layout_marginEnd="6dp"
+                android:textSize="10sp"
+                android:textColor="#808080"
+                android:textAlignment="center"
+                tools:text="time"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv4"
+                app:layout_constraintTop_toBottomOf="@+id/tv2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/merged_bg_round"
+                android:padding="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/merged"
+                android:textColor="#9300ff"
+                app:drawableStartCompat="@drawable/ic_git_merge"
+                app:drawableTint="#9300ff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv5"
+                app:layout_constraintTop_toTopOf="@+id/tv4"
+                app:layout_constraintStart_toEndOf="@+id/tv4"
+                app:layout_constraintBottom_toBottomOf="@+id/tv4"
+                android:background="@drawable/branchname_bg_round"
+                android:padding="4dp"
+                android:layout_marginStart="20dp"
+                android:text="@{pullsItem.head.ref}"
+                tools:text="@string/merged"
+                android:textColor="#000080"
+                app:drawableTint="#9300ff" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:id="@+id/iv2"
+                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+                app:layout_constraintTop_toTopOf="@+id/tv5"
+                app:layout_constraintStart_toEndOf="@+id/tv5"
+                app:layout_constraintBottom_toBottomOf="@+id/tv5"
+                android:layout_marginStart="4dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv6"
+                app:layout_constraintStart_toEndOf="@+id/iv2"
+                app:layout_constraintTop_toTopOf="@+id/tv4"
+                app:layout_constraintBottom_toBottomOf="@+id/tv4"
+                android:background="@drawable/branchname_bg_round"
+                android:padding="4dp"
+                android:layout_marginStart="6dp"
+                android:text="@{pullsItem.base.ref}"
+                tools:text="@string/merged"
+                android:textColor="#000080"
+                app:drawableTint="#9300ff" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:id="@+id/view1"
+                app:layout_constraintTop_toBottomOf="@+id/tv4"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#808080"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/iv3"
+                app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
+                app:layout_constraintTop_toBottomOf="@+id/view1"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/tv7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@+id/iv3"
+                app:layout_constraintStart_toEndOf="@+id/iv3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/iv3"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="6dp"
+                android:textColor="@color/black"
+                android:text="@{pullsItem.user.login + ` (` + pullsItem.author_association + `)` }"
+                tools:text="description"
+                />
+
+            <TextView
+                android:id="@+id/tv8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/iv3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/black"
+                android:text="@{pullsItem.body}"
+                tools:text="description"
+                />
+
+            <TextView
+                android:id="@+id/tv9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@+id/tv8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                tools:text="description"
+                />
+
+            <TextView
+                android:id="@+id/tv10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@+id/tv9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/black"
+                tools:text="description"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/view2"
+                app:layout_constraintTop_toBottomOf="@+id/tv10"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="10dp"
+                android:background="#808080"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

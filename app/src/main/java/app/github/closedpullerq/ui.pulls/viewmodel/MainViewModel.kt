@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import app.github.closedpullerq.network.ApiInterface
 import app.github.closedpullerq.network.RetrofitClient
 import app.github.closedpullerq.ui.pulls.model.PullsDataClass
+import app.github.closedpullerq.ui.pulls.model.PullsDataClassItem
 import app.github.closedpullerq.utils.Resource
 
 class MainViewModel : ViewModel() {
@@ -14,6 +15,9 @@ class MainViewModel : ViewModel() {
 
     private val _pullsInfo: MutableLiveData<Resource<PullsDataClass>> = MutableLiveData()
     val pullsInfo: LiveData<Resource<PullsDataClass>> = _pullsInfo
+
+    private val _currentPullInfo: MutableLiveData<PullsDataClassItem> = MutableLiveData()
+    val currentPullInfo: LiveData<PullsDataClassItem> = _currentPullInfo
 
     suspend fun getPullsInfo(pullState : String){
         _pullsInfo.postValue(Resource.loading(null))
@@ -29,4 +33,13 @@ class MainViewModel : ViewModel() {
             _pullsInfo.postValue(Resource.error(e.localizedMessage?:"unknown error", null))
         }
     }
+
+    fun setCurrentPullItem(item : PullsDataClassItem){
+        _currentPullInfo.postValue(item)
+    }
+
+    fun getCurrentPullItem() : PullsDataClassItem {
+        return _currentPullInfo.value!!
+    }
+
 }

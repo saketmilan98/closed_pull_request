@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import app.github.closedpullerq.R
 import app.github.closedpullerq.databinding.PullsItemRvLayoutBinding
 import app.github.closedpullerq.ui.pulls.model.PullsDataClassItem
+import app.github.closedpullerq.utils.inputFormat
+import app.github.closedpullerq.utils.outputFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class PullsDataAdapter(val context : Context, val onItemClicked: (PullsDataClassItem, Int) -> Unit) : RecyclerView.Adapter<PullsDataAdapter.CartViewHolder>() {
 
@@ -23,6 +27,9 @@ class PullsDataAdapter(val context : Context, val onItemClicked: (PullsDataClass
     override fun onBindViewHolder(cartViewHolder: CartViewHolder, i: Int) {
         val currentItem: PullsDataClassItem = pullDataa!![i]
         cartViewHolder.pullsListItemBinding.pullsItem = currentItem
+        val parsedDate: Date = inputFormat.parse(currentItem.closed_at) as Date
+        cartViewHolder.pullsListItemBinding.tv3.text = outputFormat.format(parsedDate)
+
         cartViewHolder.itemView.setOnClickListener {
             onItemClicked(currentItem, i)
         }
