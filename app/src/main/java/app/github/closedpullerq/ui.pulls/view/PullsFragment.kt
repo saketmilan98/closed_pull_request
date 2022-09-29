@@ -6,11 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import app.github.closedpullerq.R
 import app.github.closedpullerq.databinding.FragmentPullsBinding
 import app.github.closedpullerq.ui.pulls.adapter.PullsDataAdapter
 import app.github.closedpullerq.ui.pulls.viewmodel.MainViewModel
+import app.github.closedpullerq.utils.Status
+import app.github.closedpullerq.utils.showToast
 
 class PullsFragment : Fragment() {
 
@@ -20,7 +26,7 @@ class PullsFragment : Fragment() {
     private val pullDataAdapter by lazy { PullsDataAdapter(requireContext(),
         onItemClicked = { pullItem, position ->
             viewModel.setCurrentPullItem(pullItem)
-            requireActivity().supportFragmentManager.beginTransaction().add(R.id.mainFragmentContainer, PullsDetailFragment()).addToBackStack(null).commit()
+            findNavController().navigate(R.id.action_pullsFragment_to_pullsDetailFragment)
         })
     }
 
@@ -40,15 +46,30 @@ class PullsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbarLayout.toolbarTitleTv.text = getString(R.string.app_name)
         binding.toolbarLayout.toolbarBackIv.setImageDrawable(ResourcesCompat.getDrawable(requireActivity().resources, R.drawable.ic_github_icon, requireActivity().theme))
-        binding.toolbarLayout.toolbarBackIv.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
         binding.pullListRv.adapter = pullDataAdapter
-        setPullRvData()
-    }
 
-    fun setPullRvData(){
-        pullDataAdapter.setPullItemList(viewModel.pullsInfo.value?.data)
-    }
+        if(viewModel.pullsInfo.value == null){
+            lifecycleScope.launchWhenCreated {
+                viewModel.getPullsInfo("closed")
+            }
+        }
 
+        viewModel.pullsInfo.observe(viewLifecycleOwner, Observer {
+            when(it.status){
+                Status.LOADING -> {
+                    binding.progressBar.isVisible = true
+                }
+                Status.SUCCESS -> {
+                    binding.progressBar.isVisible = false
+                    it.data?.let { mainInfo ->
+                        pullDataAdapter.setPullItemList(mainInfo)
+                    }
+                }
+                Status.ERROR -> {
+                    binding.progressBar.isVisible = false
+                    requireContext().showToast("Api Call Failed: ${it.message}")
+                }
+            }
+        })
+    }
 }

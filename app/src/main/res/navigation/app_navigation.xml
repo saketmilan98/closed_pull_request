@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/pullsFragment">
+
+    <fragment
+        android:id="@+id/pullsFragment"
+        android:name="app.github.closedpullerq.ui.pulls.view.PullsFragment"
+        android:label="PullsFragment" >
+
+        <action android:id="@+id/action_pullsFragment_to_pullsDetailFragment"
+            app:destination="@id/pullsDetailFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/pullsDetailFragment"
+        android:name="app.github.closedpullerq.ui.pulls.view.PullsDetailFragment"
+        android:label="PullsDetailFragment" >
+        <action android:id="@+id/action_pullsDetailFragment_to_pullsFragment"
+            app:popUpTo="@id/pullsFragment"/>
+
+    </fragment>
+</navigation>
